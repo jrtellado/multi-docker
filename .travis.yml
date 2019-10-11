@@ -10,7 +10,7 @@ before_install:
 
 script:
   # se indican los scripts que se ejecutaran en la imagen creada para las pruebas
-  # se sobreescribe el comando nmp test
+  # se sobreescribe el comando nmp test haciendo que termine el proceso una vez hecho las pruebas
   - docker run -e CI=true jrtellado/react-test npm test
 
 # indica lo que hay que hacer si las pruebas se han realizado con exito. Aqui comienza el proceso de produccion
