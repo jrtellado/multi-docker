@@ -22,7 +22,7 @@ after_success:
   - docker build -t jrtellado/multi-worker ./worker
   # login en la consola docker utilizando unas variables de entorno que se crean en travis
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
-  # toma estas imagenes y las empuja a dockerhub
+  # toma estas imagenes y las empuja a dockerhub o github
   - docker push jrtellado/multi-client
   - docker push jrtellado/multi-nginx
   - docker push jrtellado/multi-server
