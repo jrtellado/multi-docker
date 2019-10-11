@@ -1,0 +1,31 @@
+sudo: required
+
+services:
+  - docker
+
+# indica lo que hay que hacer antes de la instalacion, normalmente se hacen pruebas
+before_install:
+  # utiliza el archivo Dockerfile.dev para hacer purebas antes de instalar la aplicacion con Dockerfile
+  - docker build -t jrtellado/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  # se indican los scripts que se ejecutaran en la imagen creada para las pruebas
+  # se sobreescribe el comando nmp test, añadiendo el argumento -- --coverage para que el la ejecucion se cierre al realizar la pruebas
+  - docker run jrtellado/react-test npm test -- --coverage
+
+# indica lo que hay que hacer si las pruebas se han realizado con exito. Aqui comienza el proceso de produccion
+after_success:
+  # se construyen los contenedores de cada parte de la aplicacion
+  - docker build -t jrtellado/multi-client ./client
+  - docker build -t jrtellado/multi-nginx ./nginx
+  - docker build -t jrtellado/multi-server ./server
+  - docker build -t jrtellado/multi-worker ./worker
+  # login en la consola docker utilizando unas variables de entorno que se crean en travis
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
+  # toma estas imagenes y las empuja a dockerhub
+  - docker push jrtellado/multi-client
+  - docker push jrtellado/multi-nginx
+  - docker push jrtellado/multi-server
+  - docker push jrtellado/multi-worker
+
+
