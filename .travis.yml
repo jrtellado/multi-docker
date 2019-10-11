@@ -3,7 +3,7 @@ sudo: required
 services:
   - docker
 
-# indica lo que hay que hacer antes de la instalacion, normalmente se hacen pruebas
+# indica lo que hay que hacer antes de la instalacion, en este caso se hacen pruebas en travis
 before_install:
   # utiliza el archivo Dockerfile.dev para hacer purebas antes de instalar la aplicacion con Dockerfile
   - docker build -t jrtellado/react-test -f ./client/Dockerfile.dev ./client
