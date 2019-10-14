@@ -1,5 +1,5 @@
 {
-    "AWSEBDcokerrunvresion": 2, 
+    "AWSEBDockerrunvresion": 2, 
     "containerDefinitions": [
         {
             "name": "client",
